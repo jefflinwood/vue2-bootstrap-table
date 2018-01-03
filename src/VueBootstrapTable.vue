@@ -463,7 +463,11 @@
                 if ( this.ajax.enabled && this.ajax.delegate ) {
                    this.fetchData(function (data) {
                        self.filteredSize = data.filtered;
-                       self.filteredValues = data.data;
+                       if (typeof self.ajax.processDataFunction !== "undefined") {
+                           self.filteredValues = self.ajax.processDataFunction(data.data);
+                       } else {
+                           self.filteredValues = data.data;
+                       }
                        self.loading = false;
                    });
                 } else {
